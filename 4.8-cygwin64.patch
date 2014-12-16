@@ -1,0 +1,103 @@
+--- origsrc/gcc-4.8.2/config/dfp.m4	2013-11-17 00:17:34.629826500 -0600
++++ src/gcc-4.8.2/config/dfp.m4	2013-11-16 23:57:58.000000000 -0600
+@@ -23,7 +23,7 @@ Valid choices are 'yes', 'bid', 'dpd', a
+     powerpc*-*-linux* | i?86*-*-linux* | x86_64*-*-linux* | s390*-*-linux* | \
+     i?86*-*-gnu* | \
+     i?86*-*-mingw* | x86_64*-*-mingw* | \
+-    i?86*-*-cygwin*)
++    i?86*-*-cygwin* | x86_64*-*-cygwin*)
+       enable_decimal_float=yes
+       ;;
+     *)
+--- origsrc/gcc-4.8.2/config/picflag.m4	2013-11-17 00:17:34.633826700 -0600
++++ src/gcc-4.8.2/config/picflag.m4	2013-11-16 23:57:58.000000000 -0600
+@@ -17,7 +17,9 @@ case "${$2}" in
+     hppa*64*-*-hpux*)
+ 	# PIC is the default for 64-bit PA HP-UX.
+ 	;;
+-    i[[34567]]86-*-cygwin* | i[[34567]]86-*-mingw* | x86_64-*-mingw*)
++    i[[34567]]86-*-cygwin* | x86_64-*-cygwin*)
++	;;
++    i[[34567]]86-*-mingw* | x86_64-*-mingw*)
+ 	;;
+     i[[34567]]86-*-interix[[3-9]]*)
+ 	# Interix 3.x gcc -fpic/-fPIC options generate broken code.
+--- origsrc/gcc-4.8.2/gcc/config.build	2013-11-17 00:17:34.636826900 -0600
++++ src/gcc-4.8.2/gcc/config.build	2013-11-16 23:57:58.000000000 -0600
+@@ -60,7 +60,7 @@ case $build in
+     # IBM 360/370/390 Architecture
+     build_xm_defines='FATAL_EXIT_CODE=12'
+     ;;
+-  i[34567]86-*-cygwin* )
++  i[34567]86-*-cygwin* | x86_64-*-cygwin*)
+     build_xm_file=i386/xm-cygwin.h
+     build_exeext=.exe
+     ;;
+--- origsrc/gcc-4.8.2/gcc/config.host	2013-11-17 00:17:34.640827100 -0600
++++ src/gcc-4.8.2/gcc/config.host	2013-11-16 23:57:58.000000000 -0600
+@@ -214,7 +214,7 @@ case ${host} in
+         ;;
+     esac
+     ;;
+-  i[34567]86-*-cygwin*)
++  i[34567]86-*-cygwin* | x86_64-*-cygwin*)
+     host_xm_file=i386/xm-cygwin.h
+     out_host_hook_obj=host-cygwin.o
+     host_xmake_file="${host_xmake_file} i386/x-cygwin"
+--- origsrc/gcc-4.8.2/gcc/configure	2013-11-17 00:17:34.656828000 -0600
++++ src/gcc-4.8.2/gcc/configure	2013-11-16 23:57:58.000000000 -0600
+@@ -4893,7 +4893,9 @@ case "${target}" in
+     hppa*64*-*-hpux*)
+ 	# PIC is the default for 64-bit PA HP-UX.
+ 	;;
+-    i[34567]86-*-cygwin* | i[34567]86-*-mingw* | x86_64-*-mingw*)
++    i[34567]86-*-cygwin* | x86_64-*-cygwin*)
++	;;
++    i[34567]86-*-mingw* | x86_64-*-mingw*)
+ 	;;
+     i[34567]86-*-interix[3-9]*)
+ 	# Interix 3.x gcc -fpic/-fPIC options generate broken code.
+@@ -7079,7 +7081,7 @@ else
+     powerpc*-*-linux* | i?86*-*-linux* | x86_64*-*-linux* | s390*-*-linux* | \
+     i?86*-*-gnu* | \
+     i?86*-*-mingw* | x86_64*-*-mingw* | \
+-    i?86*-*-cygwin*)
++    i?86*-*-cygwin* | x86_64*-*-cygwin*)
+       enable_decimal_float=yes
+       ;;
+     *)
+--- origsrc/gcc-4.8.2/libdecnumber/configure	2013-11-17 00:17:34.688829900 -0600
++++ src/gcc-4.8.2/libdecnumber/configure	2013-11-16 23:57:58.000000000 -0600
+@@ -4613,7 +4613,7 @@ else
+     powerpc*-*-linux* | i?86*-*-linux* | x86_64*-*-linux* | s390*-*-linux* | \
+     i?86*-*-gnu* | \
+     i?86*-*-mingw* | x86_64*-*-mingw* | \
+-    i?86*-*-cygwin*)
++    i?86*-*-cygwin* | x86_64*-*-cygwin*)
+       enable_decimal_float=yes
+       ;;
+     *)
+--- origsrc/gcc-4.8.2/libgcc/configure	2013-11-17 00:17:34.713831300 -0600
++++ src/gcc-4.8.2/libgcc/configure	2013-11-16 23:57:58.000000000 -0600
+@@ -4078,7 +4078,7 @@ else
+     powerpc*-*-linux* | i?86*-*-linux* | x86_64*-*-linux* | s390*-*-linux* | \
+     i?86*-*-gnu* | \
+     i?86*-*-mingw* | x86_64*-*-mingw* | \
+-    i?86*-*-cygwin*)
++    i?86*-*-cygwin* | x86_64*-*-cygwin*)
+       enable_decimal_float=yes
+       ;;
+     *)
+--- origsrc/gcc-4.8.2/libiberty/configure	2013-11-17 00:17:34.739832800 -0600
++++ src/gcc-4.8.2/libiberty/configure	2013-11-16 23:57:59.000000000 -0600
+@@ -4865,7 +4865,9 @@ case "${host}" in
+     hppa*64*-*-hpux*)
+ 	# PIC is the default for 64-bit PA HP-UX.
+ 	;;
+-    i[34567]86-*-cygwin* | i[34567]86-*-mingw* | x86_64-*-mingw*)
++    i[34567]86-*-cygwin* | x86_64-*-cygwin*)
++	;;
++    i[34567]86-*-mingw* | x86_64-*-mingw*)
+ 	;;
+     i[34567]86-*-interix[3-9]*)
+ 	# Interix 3.x gcc -fpic/-fPIC options generate broken code.
