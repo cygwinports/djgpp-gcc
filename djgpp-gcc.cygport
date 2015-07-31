@@ -2,7 +2,7 @@ TOOLCHAIN_TARGET="i586-pc-msdosdjgpp"
 inherit toolchain
 
 NAME="djgpp-gcc"
-VERSION=4.8.3
+VERSION=4.9.2
 RELEASE=1
 CATEGORY="Devel"
 SUMMARY="GCC for DJGPP toolchain"
@@ -23,10 +23,9 @@ SRC_DIR="gcc-${VERSION}"
 SRC_URI+=" ftp://ftp.delorie.com/pub/djgpp/rpms/djcross-gcc-${VERSION}/djcross-gcc-${VERSION}.tar.bz2"
 
 PATCH_URI="
-	4.8-lto-plugin-soname.patch
+	4.9-lto-plugin-soname.patch
 	4.6-textdomain.patch
 	4.8-Wimplicit-decls.patch
-	4.8-cygwin64.patch
 "
 
 CYGPORT_USE_UNSTABLE_API=1
