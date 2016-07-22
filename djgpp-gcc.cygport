@@ -2,7 +2,7 @@ TOOLCHAIN_TARGET="i586-pc-msdosdjgpp"
 inherit toolchain
 
 NAME="djgpp-gcc"
-VERSION=5.3.0
+VERSION=5.4.0
 RELEASE=1
 CATEGORY="Devel"
 SUMMARY="GCC for DJGPP toolchain"
